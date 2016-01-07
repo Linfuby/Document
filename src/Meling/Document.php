@@ -21,8 +21,19 @@ class Document
      * @param \PHPixie\Template $template
      * @version 1.0
      */
-    public function __construct($template)
+    public function __construct($template = null)
     {
+        if($template === null){
+            $slice             = new \PHPixie\Slice();
+            $filesystem        = new \PHPixie\Filesystem();
+            $locatorConfig     = $slice->arrayData(array(
+                'directory' => 'assets/layouts'
+            ));
+            $root              = $filesystem->root(dirname(dirname(dirname(__DIR__))));
+            var_dump($root->path());die;
+            $filesystemLocator = $filesystem->buildlocator($locatorConfig, $root);
+            $template          = new \PHPixie\Template($slice, $filesystemLocator, $slice->arrayData());
+        }
         $this->builder = $this->buildBuilder($template);
     }
 
