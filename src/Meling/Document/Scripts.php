@@ -14,6 +14,7 @@ class Scripts
      * @version 1.0
      */
     protected $builder;
+
     /**
      * @var array
      * @version 1.0
@@ -64,6 +65,7 @@ class Scripts
         foreach ($this->scripts as $script) {
             $result .= $script->render();
         }
+
         return $result;
     }
 

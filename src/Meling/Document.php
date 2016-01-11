@@ -29,8 +29,7 @@ class Document
             $locatorConfig     = $slice->arrayData(array(
                 'directory' => 'assets/layouts'
             ));
-            $root              = $filesystem->root(dirname(dirname(dirname(__DIR__))));
-            var_dump($root->path());die;
+            $root              = $filesystem->root(dirname(dirname(__DIR__)));
             $filesystemLocator = $filesystem->buildlocator($locatorConfig, $root);
             $template          = new \PHPixie\Template($slice, $filesystemLocator, $slice->arrayData());
         }
