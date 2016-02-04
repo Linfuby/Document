@@ -4,7 +4,6 @@ namespace Meling\Document\Meta;
 /**
  * Мета-Тэг
  * Class Element
- *
  * @package Meling\Document\Meta
  */
 class Element
@@ -14,16 +13,19 @@ class Element
      * @version 1.0
      */
     protected $builder;
+
     /**
      * @var string
      * @version 1.0
      */
     protected $content;
+
     /**
      * @var string
      * @version 1.0
      */
     protected $equiv;
+
     /**
      * @var string
      * @version 1.0
@@ -32,7 +34,6 @@ class Element
 
     /**
      * Element constructor.
-     *
      * @param \Meling\Document\Builder $builder
      * @param string                   $name
      * @param string                   $equiv
@@ -49,17 +50,25 @@ class Element
 
     /**
      * Возвращает шаблон Мета-Тэга
-     *
      * @return mixed
      * @version 1.0
      */
     public function render()
     {
-        return $this->builder->template('meta', array(
-            'name' => $this->name,
+        if(!is_array($this->name)) {
+            $name = array('name' => $this->name);
+        } else {
+            $name = $this->name;
+        }
+
+        return $this->builder->template(
+            'meta', array_merge(
+            $name, array(
             'http-equiv' => $this->equiv,
-            'content' => $this->content
-        ))->render();
+            'content'    => $this->content,
+        )
+        )
+        )->render();
     }
 
 }

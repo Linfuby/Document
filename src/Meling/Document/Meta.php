@@ -4,7 +4,6 @@ namespace Meling\Document;
 /**
  * Мета-Тэги страницы
  * Class Meta
- *
  * @package Meling\Document
  */
 class Meta
@@ -14,6 +13,7 @@ class Meta
      * @version 1.0
      */
     protected $builder;
+
     /**
      * @var array
      * @version 1.0
@@ -22,7 +22,6 @@ class Meta
 
     /**
      * Meta constructor.
-     *
      * @param \Meling\Document\Builder $builder
      * @version 1.0
      */
@@ -33,7 +32,6 @@ class Meta
 
     /**
      * Добавить Мета-Тэг
-     *
      * @param string $name
      * @param string $content
      * @param bool   $equiv
@@ -41,12 +39,15 @@ class Meta
      */
     public function add($name, $content, $equiv = false)
     {
-        $this->meta[$name] = $this->builder->buildMetaElement($name, $content, $equiv);
+        if(is_array($name)) {
+            $this->meta[current($name)] = $this->builder->buildMetaElement($name, $content, $equiv);
+        } else {
+            $this->meta[$name] = $this->builder->buildMetaElement($name, $content, $equiv);
+        }
     }
 
     /**
      * Установить Кодировку
-     *
      * @param string $charset
      * @version 1.0
      */
@@ -57,7 +58,6 @@ class Meta
 
     /**
      * Возвращает все Мета-Тэги
-     *
      * @return string
      * @version 1.0
      */
@@ -67,9 +67,10 @@ class Meta
          * @var \Meling\Document\Meta\Element $meta
          */
         $result = '';
-        foreach ($this->meta as $meta) {
+        foreach($this->meta as $meta) {
             $result .= $meta->render();
         }
+
         return $result;
     }
 
